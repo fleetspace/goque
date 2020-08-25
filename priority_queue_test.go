@@ -2,8 +2,10 @@ package goque
 
 import (
 	"fmt"
+	"io/ioutil"
 	"math"
 	"os"
+	"reflect"
 	"testing"
 	"time"
 )
