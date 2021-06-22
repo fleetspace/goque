@@ -282,7 +282,7 @@ func (pq *PriorityQueue) PeekByOffset(offset uint64) (*PriorityItem, error) {
 	}
 
 	// Check if queue is empty.
-	if pq.Length() == 0 {
+	if pq.length() == 0 {
 		return nil, ErrEmpty
 	}
 
@@ -382,6 +382,11 @@ func (pq *PriorityQueue) Length() uint64 {
 	pq.RLock()
 	defer pq.RUnlock()
 
+	return pq.length()
+}
+
+// not goroutine safe - assumes lock already exists
+func (pq *PriorityQueue) length() uint64 {
 	var length uint64
 	for _, v := range pq.levels {
 		length += v.length()

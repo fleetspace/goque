@@ -26,7 +26,7 @@ go get github.com/beeker1121/goque
 Import to your project:
 
 ```go
-import "github.com/beeker1121/goque"
+import "github.com/beeker1121/goque/v2"
 ```
 
 ## Usage
