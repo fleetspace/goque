@@ -238,7 +238,6 @@ func (pq *PriorityQueue) DequeueByID(priority uint8, id uint64) (*PriorityItem, 
 	}
 
 	return item, nil
-
 }
 
 // DequeueItems dequeue's a slice of items inside a transaction so either
@@ -254,7 +253,9 @@ func (pq *PriorityQueue) DequeueItems(items []*PriorityItem) error {
 			return err
 		}
 	}
-	return trans.Commit()
+	ret := trans.Commit()
+	_, _ = pq.Peek() // update the head
+	return ret
 }
 
 // Peek returns the next item in the priority queue without removing it.
@@ -538,7 +539,7 @@ func (pq *PriorityQueue) getNextItem() (*PriorityItem, error) {
 			return result, nil
 		}
 		// If we've iterated the whole way through... we have to give up
-		if pq.levels[pq.curLevel].head > pq.levels[pq.curLevel].tail {
+		if pq.levels[pq.curLevel].head >= pq.levels[pq.curLevel].tail {
 			return result, err
 		}
 		// This item was deleted, move on to the next one!

@@ -1163,6 +1163,53 @@ func TestDequeueItems(t *testing.T) {
 	}
 }
 
+func TestDequeueItemsAll(t *testing.T) {
+	type Vector struct {
+		Data string
+	}
+	tmpdir, err := ioutil.TempDir("", "testdb")
+	if err != nil {
+		t.Error(err)
+	}
+
+	defer os.RemoveAll(tmpdir)
+
+	queue, err := OpenPriorityQueue(tmpdir, ASC)
+	if err != nil {
+		t.Error(err)
+	}
+
+	item1 := Vector{Data: "1"}
+	item2 := Vector{Data: "2"}
+	item3 := Vector{Data: "3"}
+
+	saved1, err := queue.EnqueueObject(1, item1)
+	if err != nil {
+		t.Error(err)
+	}
+	saved2, err := queue.EnqueueObject(1, item2)
+	if err != nil {
+		t.Error(err)
+	}
+	saved3, err := queue.EnqueueObject(1, item3)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if queue.Length() != 3 {
+		t.Errorf("Expected queue length of 3, got %d", queue.Length())
+	}
+
+	err = queue.DequeueItems([]*PriorityItem{saved1, saved2, saved3})
+	if err != nil {
+		t.Error(err)
+	}
+
+	if queue.Length() != 0 {
+		t.Errorf("Expected queue length of 0, got %d", queue.Length())
+	}
+}
+
 func TestDequeueItemsEmpty(t *testing.T) {
 	type Vector struct {
 		Data string
