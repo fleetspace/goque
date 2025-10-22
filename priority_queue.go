@@ -51,7 +51,7 @@ type PriorityQueue struct {
 // OpenPriorityQueue opens a priority queue if one exists at the given
 // directory. If one does not already exist, a new priority queue is
 // created.
-func OpenPriorityQueue(dataDir string, order order) (*PriorityQueue, error) {
+func OpenPriorityQueue(dataDir string, order order, opts *opt.Options) (*PriorityQueue, error) {
 	var err error
 
 	// Create a new PriorityQueue.
@@ -63,7 +63,7 @@ func OpenPriorityQueue(dataDir string, order order) (*PriorityQueue, error) {
 	}
 
 	// Open database for the priority queue.
-	pq.db, err = leveldb.OpenFile(dataDir, nil)
+	pq.db, err = leveldb.OpenFile(dataDir, opts)
 	if err != nil {
 		return pq, err
 	}
