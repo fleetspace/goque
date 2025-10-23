@@ -9,7 +9,7 @@ import (
 // ExampleObject demonstrates enqueuing a struct object.
 func Example_object() {
 	// Open/create a queue.
-	q, err := goque.OpenQueue("data_dir")
+	q, err := goque.OpenQueue("data_dir", nil)
 	if err != nil {
 		fmt.Println(err)
 		return

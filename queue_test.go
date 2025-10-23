@@ -9,7 +9,7 @@ import (
 
 func TestQueueClose(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -36,7 +36,7 @@ func TestQueueClose(t *testing.T) {
 
 func TestQueueDrop(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -54,21 +54,21 @@ func TestQueueDrop(t *testing.T) {
 
 func TestQueueIncompatibleType(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
 	defer pq.Drop()
 	pq.Close()
 
-	if _, err = OpenQueue(file); err != ErrIncompatibleType {
+	if _, err = OpenQueue(file, nil); err != ErrIncompatibleType {
 		t.Error("Expected priority queue to return ErrIncompatibleTypes when opening goquePriorityQueue")
 	}
 }
 
 func TestQueueEnqueue(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -87,7 +87,7 @@ func TestQueueEnqueue(t *testing.T) {
 
 func TestQueueDequeue(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -121,7 +121,7 @@ func TestQueueDequeue(t *testing.T) {
 
 func TestQueueEncodeDecodePointerJSON(t *testing.T) {
 	file := fmt.Sprintf("test_db_%d", time.Now().UnixNano())
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -165,7 +165,7 @@ func TestQueueEncodeDecodePointerJSON(t *testing.T) {
 
 func TestQueuePeek(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -193,7 +193,7 @@ func TestQueuePeek(t *testing.T) {
 
 func TestQueuePeekByOffset(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -243,7 +243,7 @@ func TestQueuePeekByOffset(t *testing.T) {
 
 func TestQueuePeekByID(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -273,7 +273,7 @@ func TestQueuePeekByID(t *testing.T) {
 
 func TestQueueUpdate(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -318,7 +318,7 @@ func TestQueueUpdate(t *testing.T) {
 
 func TestQueueUpdateString(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -363,7 +363,7 @@ func TestQueueUpdateString(t *testing.T) {
 
 func TestQueueUpdateObject(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -425,7 +425,7 @@ func TestQueueUpdateObject(t *testing.T) {
 
 func TestQueueUpdateObjectAsJSON(t *testing.T) {
 	file := fmt.Sprintf("test_db_%d", time.Now().UnixNano())
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -511,7 +511,7 @@ func TestQueueUpdateObjectAsJSON(t *testing.T) {
 
 func TestQueueUpdateOutOfBounds(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -547,7 +547,7 @@ func TestQueueUpdateOutOfBounds(t *testing.T) {
 
 func TestQueueEmpty(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -571,7 +571,7 @@ func TestQueueEmpty(t *testing.T) {
 
 func TestQueueOutOfBounds(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -591,7 +591,7 @@ func TestQueueOutOfBounds(t *testing.T) {
 func BenchmarkQueueEnqueue(b *testing.B) {
 	// Open test database
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		b.Error(err)
 	}
@@ -608,7 +608,7 @@ func BenchmarkQueueEnqueue(b *testing.B) {
 func BenchmarkQueueDequeue(b *testing.B) {
 	// Open test database
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		b.Error(err)
 	}

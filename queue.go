@@ -23,7 +23,7 @@ type Queue struct {
 
 // OpenQueue opens a queue if one exists at the given directory. If one
 // does not already exist, a new queue is created.
-func OpenQueue(dataDir string) (*Queue, error) {
+func OpenQueue(dataDir string, opts *opt.Options) (*Queue, error) {
 	var err error
 
 	// Create a new Queue.
@@ -36,7 +36,7 @@ func OpenQueue(dataDir string) (*Queue, error) {
 	}
 
 	// Open database for the queue.
-	q.db, err = leveldb.OpenFile(dataDir, nil)
+	q.db, err = leveldb.OpenFile(dataDir, opts)
 	if err != nil {
 		return q, err
 	}

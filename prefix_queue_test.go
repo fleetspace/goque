@@ -9,7 +9,7 @@ import (
 
 func TestPrefixQueueClose(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -36,7 +36,7 @@ func TestPrefixQueueClose(t *testing.T) {
 
 func TestPrefixQueueDrop(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -54,21 +54,21 @@ func TestPrefixQueueDrop(t *testing.T) {
 
 func TestPrefixQueueIncompatibleType(t *testing.T) {
 	file := getTestPath()
-	prq, err := OpenPriorityQueue(file, ASC)
+	prq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
 	defer prq.Drop()
 	prq.Close()
 
-	if _, err = OpenPrefixQueue(file); err != ErrIncompatibleType {
+	if _, err = OpenPrefixQueue(file, nil); err != ErrIncompatibleType {
 		t.Error("Expected priority queue to return ErrIncompatibleTypes when opening goquePriorityQueue")
 	}
 }
 
 func TestPrefixQueueEnqueue(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -87,7 +87,7 @@ func TestPrefixQueueEnqueue(t *testing.T) {
 
 func TestPrefixQueueDequeue(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -121,7 +121,7 @@ func TestPrefixQueueDequeue(t *testing.T) {
 
 func TestPrefixQueueEncodeDecodePointerJSON(t *testing.T) {
 	file := fmt.Sprintf("test_db_%d", time.Now().UnixNano())
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -165,7 +165,7 @@ func TestPrefixQueueEncodeDecodePointerJSON(t *testing.T) {
 
 func TestPrefixQueuePeek(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -193,7 +193,7 @@ func TestPrefixQueuePeek(t *testing.T) {
 
 func TestPrefixQueuePeekByID(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -223,7 +223,7 @@ func TestPrefixQueuePeekByID(t *testing.T) {
 
 func TestPrefixQueueUpdate(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -268,7 +268,7 @@ func TestPrefixQueueUpdate(t *testing.T) {
 
 func TestPrefixQueueUpdateString(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -313,7 +313,7 @@ func TestPrefixQueueUpdateString(t *testing.T) {
 
 func TestPrefixQueueUpdateObject(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -375,7 +375,7 @@ func TestPrefixQueueUpdateObject(t *testing.T) {
 
 func TestPrefixQueueUpdateObjectAsJSON(t *testing.T) {
 	file := fmt.Sprintf("test_db_%d", time.Now().UnixNano())
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -461,7 +461,7 @@ func TestPrefixQueueUpdateObjectAsJSON(t *testing.T) {
 
 func TestPrefixQueueUpdateOutOfBounds(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -497,7 +497,7 @@ func TestPrefixQueueUpdateOutOfBounds(t *testing.T) {
 
 func TestPrefixQueueEmpty(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -521,7 +521,7 @@ func TestPrefixQueueEmpty(t *testing.T) {
 
 func TestPrefixQueueOutOfBounds(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -541,7 +541,7 @@ func TestPrefixQueueOutOfBounds(t *testing.T) {
 func BenchmarkPrefixQueueEnqueue(b *testing.B) {
 	// Open test database
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		b.Error(err)
 	}
@@ -558,7 +558,7 @@ func BenchmarkPrefixQueueEnqueue(b *testing.B) {
 func BenchmarkPrefixQueueDequeue(b *testing.B) {
 	// Open test database
 	file := getTestPath()
-	pq, err := OpenPrefixQueue(file)
+	pq, err := OpenPrefixQueue(file, nil)
 	if err != nil {
 		b.Error(err)
 	}

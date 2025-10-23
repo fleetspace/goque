@@ -9,7 +9,7 @@ import (
 
 func TestStackClose(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -36,7 +36,7 @@ func TestStackClose(t *testing.T) {
 
 func TestStackDrop(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -54,21 +54,21 @@ func TestStackDrop(t *testing.T) {
 
 func TestStackIncompatibleType(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
 	defer pq.Drop()
 	pq.Close()
 
-	if _, err = OpenStack(file); err != ErrIncompatibleType {
+	if _, err = OpenStack(file, nil); err != ErrIncompatibleType {
 		t.Error("Expected stack to return ErrIncompatibleTypes when opening goquePriorityQueue")
 	}
 }
 
 func TestStackPush(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -87,7 +87,7 @@ func TestStackPush(t *testing.T) {
 
 func TestStackPop(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -121,7 +121,7 @@ func TestStackPop(t *testing.T) {
 
 func TestStackPushPopPointerJSON(t *testing.T) {
 	file := fmt.Sprintf("test_db_%d", time.Now().UnixNano())
-	q, err := OpenStack(file)
+	q, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -165,7 +165,7 @@ func TestStackPushPopPointerJSON(t *testing.T) {
 
 func TestStackPeek(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -193,7 +193,7 @@ func TestStackPeek(t *testing.T) {
 
 func TestStackPeekByOffset(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -243,7 +243,7 @@ func TestStackPeekByOffset(t *testing.T) {
 
 func TestStackPeekByID(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -273,7 +273,7 @@ func TestStackPeekByID(t *testing.T) {
 
 func TestStackUpdate(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -318,7 +318,7 @@ func TestStackUpdate(t *testing.T) {
 
 func TestStackUpdateString(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -363,7 +363,7 @@ func TestStackUpdateString(t *testing.T) {
 
 func TestStackUpdateObject(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -425,7 +425,7 @@ func TestStackUpdateObject(t *testing.T) {
 
 func TestStackUpdateObjectAsJSON(t *testing.T) {
 	file := fmt.Sprintf("test_db_%d", time.Now().UnixNano())
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -511,7 +511,7 @@ func TestStackUpdateObjectAsJSON(t *testing.T) {
 
 func TestStackUpdateOutOfBounds(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -547,7 +547,7 @@ func TestStackUpdateOutOfBounds(t *testing.T) {
 
 func TestStackEmpty(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -571,7 +571,7 @@ func TestStackEmpty(t *testing.T) {
 
 func TestStackOutOfBounds(t *testing.T) {
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -591,7 +591,7 @@ func TestStackOutOfBounds(t *testing.T) {
 func BenchmarkStackPush(b *testing.B) {
 	// Open test database
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		b.Error(err)
 	}
@@ -608,7 +608,7 @@ func BenchmarkStackPush(b *testing.B) {
 func BenchmarkStackPop(b *testing.B) {
 	// Open test database
 	file := getTestPath()
-	s, err := OpenStack(file)
+	s, err := OpenStack(file, nil)
 	if err != nil {
 		b.Error(err)
 	}

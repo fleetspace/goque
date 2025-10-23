@@ -12,7 +12,7 @@ import (
 
 func TestPriorityQueueClose(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -43,7 +43,7 @@ func TestPriorityQueueClose(t *testing.T) {
 
 func TestPriorityQueueDrop(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -61,21 +61,21 @@ func TestPriorityQueueDrop(t *testing.T) {
 
 func TestPriorityQueueIncompatibleType(t *testing.T) {
 	file := getTestPath()
-	q, err := OpenQueue(file)
+	q, err := OpenQueue(file, nil)
 	if err != nil {
 		t.Error(err)
 	}
 	defer q.Drop()
 	q.Close()
 
-	if _, err = OpenPriorityQueue(file, ASC); err != ErrIncompatibleType {
+	if _, err = OpenPriorityQueue(file, ASC, nil); err != ErrIncompatibleType {
 		t.Error("Expected priority queue to return ErrIncompatibleTypes when opening Queue")
 	}
 }
 
 func TestPriorityQueueEnqueue(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -96,7 +96,7 @@ func TestPriorityQueueEnqueue(t *testing.T) {
 
 func TestPriorityQueueDequeueAsc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -136,7 +136,7 @@ func TestPriorityQueueDequeueAsc(t *testing.T) {
 
 func TestPriorityQueueDequeueDesc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, DESC)
+	pq, err := OpenPriorityQueue(file, DESC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -176,7 +176,7 @@ func TestPriorityQueueDequeueDesc(t *testing.T) {
 
 func TestPriorityQueueDequeueByPriority(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -216,7 +216,7 @@ func TestPriorityQueueDequeueByPriority(t *testing.T) {
 
 func TestPriorityQueueEncodeDecodePointerJSON(t *testing.T) {
 	file := fmt.Sprintf("test_db_%d", time.Now().UnixNano())
-	pq, err := OpenPriorityQueue(file, DESC)
+	pq, err := OpenPriorityQueue(file, DESC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -260,7 +260,7 @@ func TestPriorityQueueEncodeDecodePointerJSON(t *testing.T) {
 
 func TestPriorityQueuePeek(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -296,7 +296,7 @@ func TestPriorityQueuePeek(t *testing.T) {
 
 func TestPriorityQueuePeekByOffsetEmptyAsc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -328,7 +328,7 @@ func TestPriorityQueuePeekByOffsetEmptyAsc(t *testing.T) {
 
 func TestPriorityQueuePeekByOffsetEmptyDesc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, DESC)
+	pq, err := OpenPriorityQueue(file, DESC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -360,7 +360,7 @@ func TestPriorityQueuePeekByOffsetEmptyDesc(t *testing.T) {
 
 func TestPriorityQueuePeekByOffsetBoundsAsc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -406,7 +406,7 @@ func TestPriorityQueuePeekByOffsetBoundsAsc(t *testing.T) {
 
 func TestPriorityQueuePeekByOffsetBoundsDesc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, DESC)
+	pq, err := OpenPriorityQueue(file, DESC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -452,7 +452,7 @@ func TestPriorityQueuePeekByOffsetBoundsDesc(t *testing.T) {
 
 func TestPriorityQueuePeekByOffsetAsc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -516,7 +516,7 @@ func TestPriorityQueuePeekByOffsetAsc(t *testing.T) {
 
 func TestPriorityQueuePeekByOffsetDesc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, DESC)
+	pq, err := OpenPriorityQueue(file, DESC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -580,7 +580,7 @@ func TestPriorityQueuePeekByOffsetDesc(t *testing.T) {
 
 func TestPriorityQueuePeekByPriorityID(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -616,7 +616,7 @@ func TestPriorityQueuePeekByPriorityID(t *testing.T) {
 
 func TestPriorityQueueUpdate(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -671,7 +671,7 @@ func TestPriorityQueueUpdate(t *testing.T) {
 
 func TestPriorityQueueUpdateString(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -726,7 +726,7 @@ func TestPriorityQueueUpdateString(t *testing.T) {
 
 func TestPriorityQueueUpdateObject(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -799,7 +799,7 @@ func TestPriorityQueueUpdateObject(t *testing.T) {
 
 func TestPriorityQueueUpdateObjectAsJSON(t *testing.T) {
 	file := fmt.Sprintf("test_db_%d", time.Now().UnixNano())
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -899,7 +899,7 @@ func TestPriorityQueueUpdateObjectAsJSON(t *testing.T) {
 
 func TestPriorityQueueUpdateOutOfBounds(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -937,7 +937,7 @@ func TestPriorityQueueUpdateOutOfBounds(t *testing.T) {
 
 func TestPriorityQueueHigherPriorityAsc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -977,7 +977,7 @@ func TestPriorityQueueHigherPriorityAsc(t *testing.T) {
 
 func TestPriorityQueueHigherPriorityDesc(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, DESC)
+	pq, err := OpenPriorityQueue(file, DESC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1017,7 +1017,7 @@ func TestPriorityQueueHigherPriorityDesc(t *testing.T) {
 
 func TestPriorityQueueEmpty(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1041,7 +1041,7 @@ func TestPriorityQueueEmpty(t *testing.T) {
 
 func TestPriorityQueueOutOfBounds(t *testing.T) {
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1069,7 +1069,7 @@ func TestPriorityQueuePopMidStream(t *testing.T) {
 
 	defer os.RemoveAll(tmpdir)
 
-	queue, err := OpenPriorityQueue(tmpdir, ASC)
+	queue, err := OpenPriorityQueue(tmpdir, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1129,7 +1129,7 @@ func TestDequeueItems(t *testing.T) {
 
 	defer os.RemoveAll(tmpdir)
 
-	queue, err := OpenPriorityQueue(tmpdir, ASC)
+	queue, err := OpenPriorityQueue(tmpdir, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1174,7 +1174,7 @@ func TestDequeueItemsAll(t *testing.T) {
 
 	defer os.RemoveAll(tmpdir)
 
-	queue, err := OpenPriorityQueue(tmpdir, ASC)
+	queue, err := OpenPriorityQueue(tmpdir, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1221,7 +1221,7 @@ func TestDequeueItemsEmpty(t *testing.T) {
 
 	defer os.RemoveAll(tmpdir)
 
-	queue, err := OpenPriorityQueue(tmpdir, ASC)
+	queue, err := OpenPriorityQueue(tmpdir, ASC, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1235,7 +1235,7 @@ func TestDequeueItemsEmpty(t *testing.T) {
 func BenchmarkPriorityQueueEnqueue(b *testing.B) {
 	// Open test database
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		b.Error(err)
 	}
@@ -1252,7 +1252,7 @@ func BenchmarkPriorityQueueEnqueue(b *testing.B) {
 func BenchmarkPriorityQueueDequeue(b *testing.B) {
 	// Open test database
 	file := getTestPath()
-	pq, err := OpenPriorityQueue(file, ASC)
+	pq, err := OpenPriorityQueue(file, ASC, nil)
 	if err != nil {
 		b.Error(err)
 	}

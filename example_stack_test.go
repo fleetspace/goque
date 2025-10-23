@@ -9,7 +9,7 @@ import (
 // ExampleStack demonstrates the implementation of a Goque stack.
 func Example_stack() {
 	// Open/create a stack.
-	s, err := goque.OpenStack("data_dir")
+	s, err := goque.OpenStack("data_dir", nil)
 	if err != nil {
 		fmt.Println(err)
 		return
